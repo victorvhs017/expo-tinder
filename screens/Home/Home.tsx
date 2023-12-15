@@ -11,10 +11,14 @@ const Home = () => {
       <Swiper
         cards={HomeScreenPics}
         renderCard={(card: Pic) => (
-          <Card caption={card.caption} pic={card.pic} title={card.title} />
+          <Card
+            caption={card.caption}
+            pic={card.pic as string}
+            title={card.title}
+          />
         )}
         infinite
-        backgroundColor="white"
+        backgroundColor="#fff"
         cardHorizontalMargin={0}
         stackSize={2}
       />

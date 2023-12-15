@@ -25,7 +25,7 @@ const TopPicks = () => {
               caption={caption}
               captionStyle={styles.caption}
               featured
-              key={pic}
+              key={pic.toString()}
             />
           ))}
         </View>

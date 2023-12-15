@@ -1,7 +1,8 @@
+import { ImageSourcePropType } from "react-native";
 import shuffleArray from "../utils/shuffleArray";
 
 export type Pic = {
-  pic: string;
+  pic: ImageSourcePropType;
   title: string;
   caption: string;
 };
