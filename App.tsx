@@ -6,6 +6,11 @@ import TabBarIcon from "./components/TabBarIcon/TabBarIcon";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { FontAwesome } from "@expo/vector-icons";
+import { StatusBar } from "react-native";
+import TopPicks from "./screens/TopPicks/TopPicks";
+import Messages from "./screens/Messages/Messages";
+import Profile from "./screens/Profile/Profile";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -22,8 +27,9 @@ const App = () => {
       SplashScreen.hideAsync();
 
       if (fontError) {
-        console.log("An error occurred fetching the font");
-        console.log(fontError);
+        console.error(
+          `An error occurred fetching the font: ${fontError.message}`
+        );
       }
     }
   }, [fontsLoaded, fontError]);
@@ -33,25 +39,46 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused }) => {
-            let iconName: keyof typeof FontAwesome.glyphMap = "fire";
+    <>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused }) => {
+              let iconName: keyof typeof FontAwesome.glyphMap;
 
-            return (
-              <TabBarIcon
-                focused={focused}
-                iconName={iconName}
-                Icon={FontAwesome}
-              />
-            );
-          },
-        })}
-      >
-        <Tab.Screen name="Home" component={Home} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              switch (route.name) {
+                case "Home":
+                  iconName = "fire";
+                  break;
+                case "Top Picks":
+                  iconName = "diamond";
+                  break;
+                case "Messages":
+                  iconName = "commenting-o";
+                  break;
+                case "Profile":
+                  iconName = "user";
+                  break;
+              }
+
+              return (
+                <TabBarIcon
+                  focused={focused}
+                  iconName={iconName}
+                  Icon={FontAwesome}
+                />
+              );
+            },
+            headerShown: false,
+          })}
+        >
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Top Picks" component={TopPicks} />
+          <Tab.Screen name="Messages" component={Messages} />
+          <Tab.Screen name="Profile" component={Profile} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 
