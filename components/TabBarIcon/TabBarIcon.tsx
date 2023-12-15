@@ -1,15 +1,17 @@
 import React from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Colors from "../../constants/Colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 interface TabBarIconProps {
   focused: boolean;
-  iconName: keyof typeof Ionicons.glyphMap;
+  //we can extends this to support other icons adding other types
+  iconName: keyof typeof FontAwesome.glyphMap;
+  Icon: typeof FontAwesome;
 }
 
-const TabBarIcon = ({ focused, iconName }: TabBarIconProps) => {
+const TabBarIcon = ({ focused, iconName, Icon }: TabBarIconProps) => {
   return (
-    <Ionicons
+    <Icon
       name={iconName}
       size={26}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
