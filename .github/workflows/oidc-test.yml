@@ -1,0 +1,25 @@
+name: Test Infisical OIDC
+
+on:
+  workflow_dispatch:
+
+jobs:
+  oidc-login:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Get GitHub OIDC token and login to Infisical
+        env:
+          INFISICAL_URL: https://interjectory-scrumptious-domenic.ngrok-free.dev
+          IDENTITY_ID: 15cd4e7a-c7e8-447e-b18d-9e6df8778879
+        run: |
+          OIDC_TOKEN="$(curl -sS \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=infisical" | jq -r '.value')"
+
+          curl -sS -X POST "$INFISICAL_URL/api/v1/auth/oidc-auth/login" \
+            -H "Content-Type: application/json" \
+            -d "{\"identityId\":\"$IDENTITY_ID\",\"jwt\":\"$OIDC_TOKEN\"}"
