@@ -14,7 +14,7 @@ jobs:
       - name: Get GitHub OIDC token and login to Infisical
         env:
           INFISICAL_URL: https://interjectory-scrumptious-domenic.ngrok-free.dev
-          IDENTITY_ID: 15cd4e7a-c7e8-447e-b18d-9e6df8778879
+          IDENTITY_ID: 142aee39-3566-40d4-90c3-738fec232731
         run: |
           OIDC_TOKEN="$(curl -sS \
             -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
